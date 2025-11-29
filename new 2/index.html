@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareSync</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <i data-lucide="heart"></i>
+                </div>
+                <span class="logo-text">CareSync</span>
+            </div>
+            <div class="header-right">
+                <div class="avatar-group">
+                    <div class="avatar" style="background: #10b981;">SA</div>
+                    <div class="avatar" style="background: #3b82f6;">MI</div>
+                    <div class="avatar" style="background: #a855f7;">JE</div>
+                    <div class="avatar-placeholder">+2</div>
+                </div>
+                <button class="icon-btn">
+                    <i data-lucide="bell"></i>
+                    <span class="notification-dot"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <div>
+                <h1>Good Morning, Alex</h1>
+                <p>Dad is doing well today. Last vitals updated 2h ago.</p>
+            </div>
+            <button class="btn-primary" onclick="openAIModal('planner')">
+                <i data-lucide="plus"></i> New Update
+            </button>
+        </section>
+
+        <!-- Burnout Meter -->
+        <div class="card burnout-card">
+            <div class="burnout-header">
+                <div>
+                    <h3>
+                        <i data-lucide="activity"></i> Caregiver Wellness
+                    </h3>
+                    <p>Honest check-in. Only visible to siblings.</p>
+                </div>
+                <div class="badge-weekly">Weekly Pulse</div>
+            </div>
+            <div class="burnout-content">
+                <div class="burnout-label">
+                    <span>Your Energy Level</span>
+                    <span id="burnoutValue">30%</span>
+                </div>
+                <input 
+                    type="range" 
+                    id="burnoutSlider" 
+                    min="0" 
+                    max="100" 
+                    value="30"
+                    class="burnout-slider"
+                />
+                <div class="burnout-labels">
+                    <span>Running Empty</span>
+                    <span>Doing Okay</span>
+                    <span>Supercharged</span>
+                </div>
+            </div>
+            <div id="burnoutWarning" class="burnout-warning" style="display: none;">
+                <i data-lucide="coffee"></i>
+                <span>You're running low. We've notified Mike to pick up the grocery run.</span>
+            </div>
+        </div>
+
+        <!-- Task Marketplace -->
+        <div class="tasks-section">
+            <div class="section-header">
+                <h2>Task Marketplace</h2>
+                <button class="btn-ai" onclick="openAIModal('planner')">
+                    <i data-lucide="sparkles"></i> AI Planner
+                </button>
+            </div>
+            <div id="tasksList" class="tasks-list">
+                <!-- Tasks will be rendered here -->
+            </div>
+        </div>
+
+        <!-- Info Vault Section -->
+        <section class="info-vault">
+            <div class="info-card" onclick="alert('Medications section')">
+                <div class="info-icon" style="background: #fef2f2; color: #dc2626;">
+                    <i data-lucide="stethoscope"></i>
+                </div>
+                <h3>Medications</h3>
+                <p>4 Active Prescriptions</p>
+            </div>
+            <div class="info-card" onclick="alert('Insurance section')">
+                <div class="info-icon" style="background: #eff6ff; color: #2563eb;">
+                    <i data-lucide="shield"></i>
+                </div>
+                <h3>Insurance</h3>
+                <p>Cards & Policy Docs</p>
+            </div>
+            <div class="info-card" onclick="alert('Finances section')">
+                <div class="info-icon" style="background: #ecfdf5; color: #10b981;">
+                    <i data-lucide="credit-card"></i>
+                </div>
+                <h3>Finances</h3>
+                <p>Shared Expense Log</p>
+            </div>
+            <div class="info-card translator-card" onclick="openAIModal('translator')">
+                <div class="info-icon" style="background: #eef2ff; color: #4f46e5;">
+                    <i data-lucide="brain-circuit"></i>
+                </div>
+                <h3>
+                    Translator <i data-lucide="sparkles" style="width: 12px; height: 12px;"></i>
+                </h3>
+                <p>Clarify medical terms</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- AI Modal -->
+    <div id="aiModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title-section">
+                    <div class="modal-icon" id="modalIcon">
+                        <i data-lucide="sparkles"></i>
+                    </div>
+                    <div>
+                        <h3 id="modalTitle">AI Task Planner</h3>
+                        <p id="modalSubtitle">Powered by Gemini</p>
+                    </div>
+                </div>
+                <button class="close-btn" onclick="closeAIModal()">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Modal content will be rendered here -->
+            </div>
+            <div class="modal-footer" id="modalFooter">
+                <!-- Modal footer will be rendered here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Confetti Animation -->
+    <div id="confetti" class="confetti" style="display: none;">
+        <div class="confetti-content">
+            <i data-lucide="check-square"></i> Success! Family updated.
+        </div>
+    </div>
+
+    <!-- Mobile Bottom Nav -->
+    <nav class="bottom-nav">
+        <button class="nav-btn active" onclick="setActiveTab('dashboard', this)">
+            <i data-lucide="activity"></i>
+            <span>Home</span>
+        </button>
+        <button class="nav-btn" onclick="setActiveTab('calendar', this)">
+            <i data-lucide="calendar"></i>
+            <span>Calendar</span>
+        </button>
+        <div class="nav-center-btn" onclick="openAIModal('planner')">
+            <i data-lucide="sparkles"></i>
+        </div>
+        <button class="nav-btn" onclick="setActiveTab('chat', this)">
+            <i data-lucide="message-circle"></i>
+            <span>Chat</span>
+        </button>
+        <button class="nav-btn" onclick="setActiveTab('settings', this)">
+            <i data-lucide="users"></i>
+            <span>Team</span>
+        </button>
+    </nav>
+
+    <script src="script.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
+
